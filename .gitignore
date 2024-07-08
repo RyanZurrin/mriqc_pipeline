@@ -1,0 +1,27 @@
+# ignore vscode python settings and cache
+
+.vscode/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.swm
+*.swl
+*.swn
+*.swt
+
+# ignore pycharm python settings and cache
+
+.idea/
+*.iml
+*.ipr
+*.iws
+*.iws
+*.ids
+
+# ignore secret key files
+
+mriqc_gsheet_log_maker/keys/mriqc-423218-97dc4f90d9f6.json
+mriqc_gsheet_log_maker/keys/mriqc-423218-d362b8e1343d.json

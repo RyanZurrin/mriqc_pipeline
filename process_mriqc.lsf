@@ -1,0 +1,19 @@
+#!/bin/bash
+#BSUB -J run_mriqc
+#BSUB -o /data/predict1/home/rez3/bin/logs/%J.out
+#BSUB -e /data/predict1/home/rez3/bin/logs/%J.err
+#BSUB -q pri_pnl
+#BSUB -n 8
+#BSUB -R "span[hosts=1]"
+#BSUB -R "rusage[mem=32000]"
+#BSUB -W 168:00
+
+source /PHShome/rez3/anaconda3/bin/activate
+conda activate mriqc
+
+case_list="/data/predict1/home/rez3/bin/csv_files/rerun_5_6_2024d.csv"
+rawdata="/data/predict1/data_from_nda/MRI_ROOT/rawdata/"
+mriqc="/data/predict1/home/rez3/mriqc"
+
+# Command to run your script
+python /data/predict1/home/rez3/bin/code/run_mriqc.py $case_list $rawdata $mriqc
