@@ -33,7 +33,7 @@ def submit_job(job_csv_path, rawdata_dir, mriqc_outdir_root, logs_root_dir,
     command = f"""
     /usr/share/lsf/9.1/linux2.6-glibc2.3-x86_64/bin/bsub -o {log_out_path} \
          -e {log_err_path} \
-         -M 24000 -n 8 -R "span[hosts=1]" -R "rusage[mem=24000]" -q pri_pnl -W 72:00 \
+         -M 18000 -n 2 -R "span[hosts=1]" -R "rusage[mem=18000]" -q pri_pnl -W 72:00 \
          "python /data/predict1/home/rez3/bin/code/mriqc_pipeline/run_mriqc.py {job_csv_path} \
          {rawdata_dir} {mriqc_outdir_root}"
     """

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/PHShome/rez3/anaconda3/envs/mriqc/bin/python
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials

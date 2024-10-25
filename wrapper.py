@@ -3,6 +3,7 @@ import subprocess
 import argparse
 from tqdm import tqdm
 from pathlib import Path
+import pandas as pd
 
 
 
@@ -34,6 +35,12 @@ def run_make_sub_ses_caselist(input_csv, output_csv):
         ['python', '/data/predict1/home/rez3/bin/code/mriqc_pipeline'
                    '/make_sub_ses_caselist.py', '--input_csv', input_csv,
          '--output_csv', output_csv])
+    
+def merge_unique_csv_files(csv_file_1, csv_file_2, output_csv):
+    df1 = pd.read_csv(csv_file_1)
+    df2 = pd.read_csv(csv_file_2)
+    merged_df = pd.concat([df1, df2]).drop_duplicates().reset_index(drop=True)
+    merged_df.to_csv(output_csv, index=False)
 
 
 if __name__ == "__main__":
@@ -67,6 +74,11 @@ if __name__ == "__main__":
                                 "/mriqc_run_cases.csv",
                         help="Path to output CSV file for unique "
                              "subject-session pairs.")
+    parser.add_argument("-r", "--rerun_csv",
+                        default="/data/predict1/home/rez3/bin/csv_files"
+                                "/mriqc_subs_to_rerun.csv",
+                        help="Path to CSV file for cases to rerun.")    
+
 
     args = parser.parse_args()
 
@@ -86,7 +98,10 @@ if __name__ == "__main__":
          "description": "Finding missing entries"},
         {"function": run_make_sub_ses_caselist,
          "args": (args.output_diff_file, args.unique_pairs_csv),
-         "description": "Generating unique subject-session pairs"}
+         "description": "Generating unique subject-session pairs"},
+        {"function": merge_unique_csv_files,
+         "args": (args.unique_pairs_csv, args.rerun_csv, args.rerun_csv),
+         "description": "Merging with existing rerun CSV"}
     ]
 
     # Run each step with a progress bar
